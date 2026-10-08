@@ -30,16 +30,20 @@ function App() {
       <input value={text} onChange={(e) => setText(e.target.value)} />
       <button onClick={addTodo}>追加</button>
       <p>現在 {todos.length} 件</p>
-      <ul>
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onToggle={toggleTodo}
-            onDelete={deleteTodo}
-          />
-        ))}
-      </ul>
+      {todos.length === 0 ? (
+        <p>Todoがありません</p>
+      ) : (
+        <ul>
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onToggle={toggleTodo}
+              onDelete={deleteTodo}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
