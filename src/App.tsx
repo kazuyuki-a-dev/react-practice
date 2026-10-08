@@ -1,10 +1,6 @@
 import { useState } from "react";
-
-type Todo = {
-  id: number;
-  text: string;
-  done: boolean;
-};
+import type { Todo } from "./types";
+import TodoItem from "./TodoItem";
 
 function App() {
   const [text, setText] = useState("");
@@ -34,21 +30,20 @@ function App() {
       <input value={text} onChange={(e) => setText(e.target.value)} />
       <button onClick={addTodo}>追加</button>
       <p>現在 {todos.length} 件</p>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <input
-              type="checkbox"
-              checked={todo.done}
-              onChange={() => toggleTodo(todo.id)}
+      {todos.length === 0 ? (
+        <p>Todoがありません</p>
+      ) : (
+        <ul>
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onToggle={toggleTodo}
+              onDelete={deleteTodo}
             />
-            <span style={{ textDecoration: todo.done ? "line-through" : "none" }}>
-              {todo.text}
-            </span>
-            <button onClick={() => deleteTodo(todo.id)}>削除</button>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
